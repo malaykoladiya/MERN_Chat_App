@@ -1,37 +1,36 @@
-import express from "express";
-import dotenv from"dotenv";
-import cookieParser from "cookie-parser";
+// Importing required modules
+import express from "express"; // Express is a web application framework for Node.js
+import dotenv from"dotenv"; // dotenv is a zero-dependency module that loads environment variables from a .env file into process.env
+import cookieParser from "cookie-parser"; // cookie-parser is a middleware that parses cookies attached to the client request object
 
-import path from "path";
+import path from "path"; // path is a built-in module that provides utilities for working with file and directory paths
 
-import authRoutes from "./routes/auth.routes.js";
-import messageRoutes from "./routes/message.routes.js";
-import userRoutes from "./routes/user.routes.js";
+import authRoutes from "./routes/auth.routes.js"; // Importing routes for authentication
+import messageRoutes from "./routes/message.routes.js"; // Importing routes for messages
+import userRoutes from "./routes/user.routes.js"; // Importing routes for users
 
+import connectToMongoDB from "./db/connectToMongoDB.js"; // Importing function to connect to MongoDB
+import { app, server } from "./socket/socket.js"; // Importing the Express app and server instance from the socket.js file
 
-import connectToMongoDB from "./db/connectToMongoDB.js";
-import { app, server } from "./socket/socket.js";
+const __dirname = path.resolve(); // Resolving the current directory path
 
-const __dirname = path.resolve();
+const PORT = process.env.PORT || 5000; // Setting the port number to either the value of the PORT environment variable or 5000 if it's not defined
 
-const PORT = process.env.PORT || 5000;
+dotenv.config(); // Loading environment variables from the .env file
 
-dotenv.config();
+app.use(express.json()); // Using the built-in middleware function in Express to parse incoming requests with JSON payloads
+app.use(cookieParser()); // Using the cookie-parser middleware to parse cookies attached to the client request object
 
-app.use(express.json()); // This is a built-in middleware function in Express. It parses incoming requests with JSON payloads and is based on body-parser.
-app.use(cookieParser());
+app.use("/api/auth", authRoutes); // Mounting the authentication routes at the /api/auth endpoint
+app.use("/api/messages", messageRoutes); // Mounting the message routes at the /api/messages endpoint
+app.use("/api/users", userRoutes); // Mounting the user routes at the /api/users endpoint
 
-app.use("/api/auth", authRoutes);
-app.use("/api/messages", messageRoutes);
-app.use("/api/users", userRoutes);
-
-app.use(express.static(path.join(__dirname, "/frontend/dist")));
+app.use(express.static(path.join(__dirname, "/frontend/dist"))); // Serving static files from the frontend/dist directory
 app.get("*", (req,res) => {
-    res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+    res.sendFile(path.join(__dirname, "frontend", "dist", "index.html")); // Sending the index.html file for any other routes
 });
 
-
 server.listen(PORT, () => {
-    connectToMongoDB();
-    console.log(`Server Running on Port ${PORT}`)
+    connectToMongoDB(); // Connecting to MongoDB
+    console.log(`Server Running on Port ${PORT}`); // Logging the server running message with the port number
 });
