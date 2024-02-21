@@ -1,60 +1,61 @@
+/* Importing Tailwind CSS base styles */
 @tailwind base;
+
+/* Importing Tailwind CSS components styles */
 @tailwind components;
+
+/* Importing Tailwind CSS utility classes */
 @tailwind utilities;
 
+/* Styling for the body element */
 body {
-	background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("/bg.png");
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center;
+	background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("/bg.png"); /* Background with linear gradient and image */
+	background-repeat: no-repeat; /* Prevent background image from repeating */
+	background-size: cover; /* Scale the background image to cover the entire element */
+	background-position: center; /* Position the background image at the center */
 }
 
-/* dark mode looking scrollbar */
+/* Styling for the scrollbar */
 ::-webkit-scrollbar {
-	width: 8px;
+	width: 8px; /* Width of the scrollbar */
 }
 
 ::-webkit-scrollbar-track {
-	background: #555;
+	background: #555; /* Background color of the scrollbar track */
 }
 
 ::-webkit-scrollbar-thumb {
-	background: #121212;
-	border-radius: 5px;
+	background: #121212; /* Background color of the scrollbar thumb */
+	border-radius: 5px; /* Border radius of the scrollbar thumb */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background: #242424;
+	background: #242424; /* Background color of the scrollbar thumb on hover */
 }
 
-
-/* SHAKE ANIMATION ON HORIZONTAL DIRECTION */
+/* Animation for shaking effect */
 .shake {
-	animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) 0.2s both;
-	transform: translate3d(0, 0, 0);
-	backface-visibility: hidden;
-	perspective: 1000px;
+	animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) 0.2s both; /* Animation properties for the shake effect */
+	transform: translate3d(0, 0, 0); /* 3D transformation to create the shake effect */
+	backface-visibility: hidden; /* Hide the backface of the element during animation */
+	perspective: 1000px; /* Perspective for 3D transformation */
 }
 
+/* Keyframes for the shake animation */
 @keyframes shake {
-	10%,
-	90% {
-		transform: translate3d(-1px, 0, 0);
+	10%, 90% {
+		transform: translate3d(-1px, 0, 0); /* Translate the element to the left */
 	}
 
-	20%,
-	80% {
-		transform: translate3d(2px, 0, 0);
+	20%, 80% {
+		transform: translate3d(2px, 0, 0); /* Translate the element to the right */
 	}
 
-	30%,
-	50%,
-	70% {
-		transform: translate3d(-4px, 0, 0);
+	30%, 50%, 70% {
+		transform: translate3d(-4px, 0, 0); /* Translate the element to the left */
 	}
 
-	40%,
-	60% {
-		transform: translate3d(4px, 0, 0);
+	40%, 60% {
+		transform: translate3d(4px, 0, 0); /* Translate the element to the right */
 	}
 }

@@ -1,46 +1,68 @@
-import React, { useState } from 'react'
+// Import necessary dependencies
+import React, { useState } from 'react';
 import { useAuthContext } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 
+// Define a custom hook named useLogin
 const useLogin = () => {
+    // Define state variables
     const [loading, setLoading] = useState(false);
-    const{setAuthUser} = useAuthContext();
+    const { setAuthUser } = useAuthContext();
+
+    // Define a login function
     const login = async (username, password) => {
-        
-        const success = handleInputError(username, password)
-        if(!success) return;
+        // Validate input fields
+        const success = handleInputError(username, password);
+        if (!success) return;
+
+        // Set loading state to true
         setLoading(true);
+
         try {
+            // Send a POST request to the login API
             const res = await fetch("/api/auth/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ username, password })
-            })
+            });
 
-            const data = await res.json()
-            if(data.error) {
-                throw new Error(data.error)
+            // Parse the response data
+            const data = await res.json();
+
+            // Check for errors in the response
+            if (data.error) {
+                throw new Error(data.error);
             }
 
-            localStorage.setItem("chat-app-user", JSON.stringify(data))
-            setAuthUser(data)
+            // Store the user data in local storage
+            localStorage.setItem("chat-app-user", JSON.stringify(data));
+
+            // Set the authenticated user in the context
+            setAuthUser(data);
         } catch (error) {
-            toast.error(error.message)
+            // Display error message using toast
+            toast.error(error.message);
         } finally {
-            setLoading(false)
+            // Set loading state to false
+            setLoading(false);
         }
-    }
+    };
 
-    return {loading, login}
-}
+    // Return loading state and login function
+    return { loading, login };
+};
 
-export default useLogin
+// Export the useLogin hook as default
+export default useLogin;
 
+// Define a helper function to handle input errors
 function handleInputError(username, password) {
-    if(!username || !password) {
-        toast.error('Please fill in all the fields')
+    // Check if username or password is empty
+    if (!username || !password) {
+        // Display error message using toast
+        toast.error('Please fill in all the fields');
         return false;
     }
     
