@@ -13,7 +13,7 @@ const generateTokenAndSetCookie = (userId, res) => {
         expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // Set the expiration date for 30 days from now
         httpOnly: true, // Set the cookie to be accessible only through HTTP requests
         sameSite: "strict", // Set the cookie to be sent only for same-site requests
-        secure: process.env.NODE_ENV === "production" ? true : false, // Set the cookie to be sent only over secure connections in production environment
+        secure: true // Set the cookie to be sent only over secure connections in production environment
     };
 
     // Set the cookie with name "jwt" and value as the generated token, using the 'res.cookie' method
